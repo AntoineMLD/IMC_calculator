@@ -22,9 +22,9 @@ create_table_bmi = '''
 CREATE TABLE IF NOT EXISTS bmi (
 bmi_id INTEGER PRIMARY KEY AUTOINCREMENT,
 user_id INTEGER,
-weight INTEGER,
-height FLOAT,
-bmi_value FLOAT,
+poids INTEGER,
+taille FLOAT,
+imc FLOAT,
 FOREIGN KEY (user_id) REFERENCES user(user_id)
 )
 
@@ -51,14 +51,4 @@ conn.commit()
 conn.close()
 
 
-def inserer_donnees_utilisateur(username, first_name, last_name, email, adresse, telephone ):
-    conn = sqlite3.connect('bdd_imc_calculator.db')
-    cur = conn.cursor()
-
-    # Insère les données dans la table
-    insert_query = "INSERT INTO user (username, first_name, last_name, email, address, telephone) VALUES (?,?,?,?,?,?)"
-    cur.execute(insert_query, (username, first_name, last_name, email, adresse, telephone))
-
-    conn.commit()
-    conn.close
-
+    
