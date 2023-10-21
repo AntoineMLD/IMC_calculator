@@ -39,34 +39,23 @@ def imc(poids,taille):
         print(imc)
 
 
-def affichage():
+def affichage(imc):
+    categories_imc = {
+        (40, 100): "Obésité morbide (classe III). Attention risque cardio-vasculaire extrêmement élevé",
+        (35, 40): "Obésité sévère (classe II). Attention risque cardio-vasculaire très élevé !",
+        (30, 35): "Obésité modérée (classe I). Attention risque cardio-vasculaire élevé !",
+        (25, 30): "Surpoids ou pré-obésité. Attention risque cardio-vasculaire accru !",
+        (18.5, 25): "Corpulence normale. Risque cardio-vasculaire faible !",
+        (16.5, 18.5): "Maigreur. Attention risque cardio-vasculaire accru !",
+        (-100, 16.5): "Maigreur extrême - dénutrition. Attention risque cardio-vasculaire élevé !"
+    }
 
-                # Classification
-                obesite_morbide =  " Obésité morbide (classe III). Attention risque cardio-vasculaire extrêmement élevé"
-                obesite_moderee_II = "Obésité sévère (classe II). Attention risque cardio-vasculaire très élevé !"
-                obesite_moderee_I = "Obésité modérée (classe I). Attention risque cardio-vasculaire élevé !"
-                surpoids = "Surpoids ou pré-obésité. Attention risque cardio-vasculaire accru !"
-                normal = "Corpulence normale. Risque cardio-vasculaire faible !"
-                maigreur = " Maigreur. Attention risque cardio-vasculaire accru !"
-                maigreur_extreme = "Maigreur extrême - dénutrition. Attention risque cardio-vasculaire élevé !"
-
-                # Affichage de la catégorie de l'IMC
-                if result > 40:
-                        print(f"Votre IMC est de {result} , {obesite_morbide}")
-                elif 35 < result < 40:
-                        print(f"Votre IMC est de {result}, {obesite_moderee_II}")
-                elif 30 < result < 35:
-                        print(f"Votre IMC est de {result}, {obesite_moderee_I}")
-                elif 25< result < 30:
-                        print(f"Votre IMC est de {result}, {surpoids} ")
-                elif 18.5 < result < 25:
-                        print(f"Votre IMC est de {result}, {normal}")
-                elif 16.5 < result < 18.5:
-                        print(f"Votre IMC est de {result}, {maigreur}")
-                elif result < 16.5:
-                        print(f"Votre IMC est de {result}, {maigreur_extreme}")
+    for (min_range, max_range), category in categories_imc.items():
+        if min_range < imc <= max_range:
+            print(f"Votre IMC est de {imc}, {category}")
 
 imc(poids, taille)
+affichage(imc)
 inserer_donnees_utilisateur(username, first_name, last_name, email, adresse, telephone)
 inserer_donnees_bmi(poids, taille, imc)
 
