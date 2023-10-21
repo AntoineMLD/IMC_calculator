@@ -1,5 +1,5 @@
-from insert_data import inserer_donnees_utilisateur, inserer_donnees_bmi
-
+from schema import User, engine, Bmi
+from sqlalchemy.orm import sessionmaker
 
 
 # Nom de l'utilisateur :
@@ -20,8 +20,6 @@ telephone = input("Renseigner votre numéro de téléphone : ")
 # L'utilisateur saisit son adresse:
 adresse = input("Renseignez votre adresse postale : ")
 
-
-
 # L'utilisateur saisit son poids (en kg)
 poids = int(input("Veuillez saisir votre poids (en Kg) : ")) 
 
@@ -31,12 +29,13 @@ taille = taille / 100
 
    
 
-    # Formule de l'imc
+# Formule de l'imc
 def imc(poids,taille):
         
         # Formule de l'IMC
         imc_resultat= round(poids / (taille * taille), 1)
         return imc_resultat
+
 
 # Résultat de la fonction imc
 imc_resultat = imc(poids,taille) 
@@ -56,9 +55,30 @@ def affichage(imc):
         if min_range < imc_resultat < max_range:
             print(f"Votre IMC est de {imc_resultat}, {category}")
 
+
+
+# Créer la session SQLAlchemy
+Session = sessionmaker(bind=engine)
+session = Session()
+
+# Pour faire le lien
+user = User(username=username, first_name=first_name, last_name=last_name, adresse=adresse, telephone=telephone, email=email)
+
+bmi = Bmi(poids=poids, taille=taille, imc_resultat=imc_resultat)
+user.bmi = bmi
+
+
+# Ajoute les objets à la session et commit
+session.add(user)
+session.add(bmi)
+session.commit()
+
+
+
+
+
 imc(poids, taille)
 affichage(imc)
-inserer_donnees_utilisateur(username, first_name, last_name, email, adresse, telephone)
-inserer_donnees_bmi(poids, taille, imc_resultat)
+
 
 
