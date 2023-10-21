@@ -29,15 +29,17 @@ poids = int(input("Veuillez saisir votre poids (en Kg) : "))
 taille = float(input("Veuillez saisir votre taille (en cm) : "))
 taille = taille / 100 
 
-    
+   
 
     # Formule de l'imc
 def imc(poids,taille):
         
         # Formule de l'IMC
-        imc = round(poids / (taille * taille), 1)
-        print(imc)
+        imc_resultat= round(poids / (taille * taille), 1)
+        return imc_resultat
 
+# Résultat de la fonction imc
+imc_resultat = imc(poids,taille) 
 
 def affichage(imc):
     categories_imc = {
@@ -51,12 +53,12 @@ def affichage(imc):
     }
 
     for (min_range, max_range), category in categories_imc.items():
-        if min_range < imc <= max_range:
-            print(f"Votre IMC est de {imc}, {category}")
+        if min_range < imc_resultat < max_range:
+            print(f"Votre IMC est de {imc_resultat}, {category}")
 
 imc(poids, taille)
 affichage(imc)
 inserer_donnees_utilisateur(username, first_name, last_name, email, adresse, telephone)
-inserer_donnees_bmi(poids, taille, imc)
+inserer_donnees_bmi(poids, taille, imc_resultat)
 
 
