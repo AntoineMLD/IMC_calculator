@@ -1,4 +1,4 @@
-from schema import inserer_donnees_utilisateur, inserer_donnees_bmi
+from insert_data import inserer_donnees_utilisateur, inserer_donnees_bmi
 
 
 
