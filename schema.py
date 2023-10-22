@@ -41,7 +41,7 @@ class History(Base):
     __tablename__ = 'history'
 
     history_id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey('user.user_id'))
+    user_id = Column(Integer, ForeignKey('bmi.user_id'))
     previous_bmi = Column(Float)
     current_bmi = Column(Float)
     timestamp = Column(DateTime, default=datetime.datetime.now)

@@ -66,11 +66,13 @@ session = Session()
 # Récupère l'IMC précedent de l'utilisateur s'il existe
 previous_bmi = None
 
-existing_user = session.query(User).filter_by(username=username)
+existing_user = session.query(User).filter_by(username=username).first()
 if existing_user:
      previous_bmi = existing_user.bmi.imc_resultat
+else:
+     previous_bmi = None
 
-     
+
 # Crée les objets user, bmi et history
 user = User(username=username, first_name=first_name, last_name=last_name, adresse=adresse, telephone=telephone, email=email)
 
