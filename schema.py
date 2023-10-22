@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Float, DateTime
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
-
+import datetime
 
 # créer un moteur pour se connecter à la base de données
 engine = create_engine('sqlite:///bdd_imc_calculator.db')
@@ -21,6 +21,7 @@ class User(Base):
     email = Column(String)
     adresse = Column(String)
     telephone = Column(Integer)
+    timestamp = Column(DateTime, default=datetime.datetime.now)
     bmi = relationship("Bmi", backref="user", uselist=False)
 
 
@@ -43,6 +44,7 @@ class History(Base):
     user_id = Column(Integer, ForeignKey('user.user_id'))
     previous_bmi = Column(Float)
     current_bmi = Column(Float)
+    timestamp = Column(DateTime, default=datetime.datetime.now)
 
 
 # Créer toutes les tables

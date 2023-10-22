@@ -40,6 +40,8 @@ def imc(poids,taille):
 # Résultat de la fonction imc
 imc_resultat = imc(poids,taille) 
 
+
+# Fonction pour afficher la catégorisation de imc_resultat
 def affichage(imc):
     categories_imc = {
         (40, 100): "Obésité morbide (classe III). Attention risque cardio-vasculaire extrêmement élevé",
