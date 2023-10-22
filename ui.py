@@ -1,11 +1,18 @@
 import tkinter as tk
 from tkinter import font
 from interface import enregistrer_donnees_utilisateur
+from PIL import Image, ImageTk
 
 
 # Paramètres de la fenêtre
 root = tk.Tk()
 root.config(bg='ivory')
+root.title("Application IMC-Calculator")
+
+# Charge l'image depuis le fichier.gif
+background_image = Image.open('giphy.gif')
+background_photo = ImageTk.PhotoImage(background_image)
+
 
 # Police Matrix
 matrix_font = font.Font(family='Courier', size=18)
@@ -13,6 +20,9 @@ matrix_font = font.Font(family='Courier', size=18)
 # Canvas pour les animations
 canvas = tk.Canvas(root, bg='grey', highlightthickness=0)
 canvas.pack(fill='both', expand=True)
+
+# Ajoute l'image au canevas
+background = canvas.create_image(0,0, image=background_photo, anchor='nw')
 
 # Labels
 label_username = tk.Label(root, text="Nom d'utilisateur", bg="ivory", fg="grey", font=matrix_font)
@@ -35,6 +45,7 @@ input_telephone = tk.Entry(root, bg="ivory", fg="grey", insertbackground="grey")
 input_adresse = tk.Entry(root, bg="ivory", fg="grey", insertbackground="grey")
 input_poids = tk.Entry(root, bg="ivory", fg="grey", insertbackground="grey")
 input_taille = tk.Entry(root, bg="ivory", fg="grey", insertbackground="grey")
+
 
 # Fonction de calcul IMC
 def calculer_imc():
