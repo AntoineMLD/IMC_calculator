@@ -1,18 +1,22 @@
 import tkinter as tk
-from tkinter import font
-from interface import enregistrer_donnees_utilisateur
+from tkinter import font, ttk
 from PIL import Image, ImageTk
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from schema import User
+from interface import enregistrer_donnees_utilisateur
 
+# Configuration de la base de données
+engine = create_engine('sqlite:///bdd_imc_calculator.db')
 
-# Paramètres de la fenêtre
+# Création de la fenêtre
 root = tk.Tk()
 root.config(bg='ivory')
 root.title("Application IMC-Calculator")
 
-# Charge l'image depuis le fichier.gif
+# Chargement de l'image depuis le fichier.gif
 background_image = Image.open('giphy.gif')
 background_photo = ImageTk.PhotoImage(background_image)
-
 
 # Police Matrix
 matrix_font = font.Font(family='Courier', size=18)
@@ -21,8 +25,8 @@ matrix_font = font.Font(family='Courier', size=18)
 canvas = tk.Canvas(root, bg='grey', highlightthickness=0)
 canvas.pack(fill='both', expand=True)
 
-# Ajoute l'image au canevas
-background = canvas.create_image(0,0, image=background_photo, anchor='nw')
+# Ajout de l'image au canevas
+background = canvas.create_image(0, 0, image=background_photo, anchor='nw')
 
 # Labels
 label_username = tk.Label(root, text="Nom d'utilisateur", bg="ivory", fg="grey", font=matrix_font)
@@ -46,8 +50,7 @@ input_adresse = tk.Entry(root, bg="ivory", fg="grey", insertbackground="grey")
 input_poids = tk.Entry(root, bg="ivory", fg="grey", insertbackground="grey")
 input_taille = tk.Entry(root, bg="ivory", fg="grey", insertbackground="grey")
 
-
-# Fonction de calcul IMC
+# Fonction de calcul de l'IMC
 def calculer_imc():
     username = input_username.get()
     first_name = input_nom.get()
@@ -58,7 +61,7 @@ def calculer_imc():
     poids = float(input_poids.get())
     taille = float(input_taille.get())
     enregistrer_donnees_utilisateur(username, first_name, last_name, email, telephone, adresse, poids, taille)
-    
+
     # Calcul de l'IMC
     taille_m = taille / 100
     imc_resultat = round(poids / (taille_m * taille_m), 1)
@@ -79,12 +82,16 @@ def calculer_imc():
             if min_range <= imc_resultat <= max_range:
                 return category
 
-    # Label du résultat
-    result_text = f"IMC de {last_name} {first_name} : {imc_resultat}"
-    label_resultat["text"] = result_text
-    label_categories_imc["text"] = f"Catégorie IMC : {affichage(imc_resultat)}"
+    # Appel de la fonction pour obtenir la catégorie
+    categorie_imc = affichage(imc_resultat)
 
-# Bouton Calculer
+    # Création du texte avec le résultat de l'IMC
+    result_text = f"IMC de {last_name} {first_name} : {imc_resultat}\nCatégorie IMC : {categorie_imc}"
+
+    # Mise à jour de label_resultat avec le texte et une police et un style spécifiques
+    label_resultat.config(text=result_text, font=("votre_police", 12, "normal"))
+
+# Bouton "Calculer"
 btn_calculer = tk.Button(root, text="Calculer", bg="ivory", fg="grey", command=calculer_imc)
 
 # Placement des widgets
@@ -117,7 +124,7 @@ label_resultat.pack()
 
 label_categories_imc.pack()
 
-# Bouton quitter
+# Bouton "Quitter"
 btn_quitter = tk.Button(root, text="Quitter", bg="ivory", fg="grey", command=root.quit)
 btn_quitter.pack(pady=20)
 
