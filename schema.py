@@ -2,13 +2,13 @@ from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 import datetime
 
-# Créez un moteur pour vous connecter à la base de données
+# Crée un moteur pour vous connecter à la base de données
 engine = create_engine('sqlite:///bdd_imc_calculator.db')
 
-# Déclarez une classe de base pour définir le modèle
+# Déclare une classe de base pour définir le modèle
 Base = declarative_base()
 
-# Créez la classe User
+# Crée la classe User
 class User(Base):
     __tablename__ = 'user'
 
@@ -22,7 +22,7 @@ class User(Base):
     timestamp = Column(DateTime, default=datetime.datetime.now)
     bmi = relationship("Bmi", backref="user", uselist=False)
 
-# Créez la classe Bmi
+# Crée la classe Bmi
 class Bmi(Base):
     __tablename__ = 'bmi'
 
@@ -32,7 +32,7 @@ class Bmi(Base):
     taille = Column(Float)
     imc_resultat = Column(Float)
 
-# Créez la classe History
+# Crée la classe History
 class History(Base):
     __tablename__ = 'history'
 
@@ -42,5 +42,5 @@ class History(Base):
     current_bmi = Column(Float)
     timestamp = Column(DateTime, default=datetime.datetime.now)
 
-# Créez toutes les tables
+# Crée toutes les tables
 Base.metadata.create_all(engine)
