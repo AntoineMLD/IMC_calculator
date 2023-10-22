@@ -4,11 +4,11 @@ from sqlalchemy.orm import sessionmaker
 # Fonction pour enregistrer les données de l'utilisateur
 def enregistrer_donnees_utilisateur(username, first_name, last_name, email, telephone, adresse, poids, taille):
 
-    # Créez une session SQLAlchemy
+    # Créer une session SQLAlchemy
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Créez l'objet User
+    # Créer l'objet User
     user = User(username=username, first_name=first_name, last_name=last_name, adresse=adresse, telephone=telephone, email=email)
 
     # Formule de l'IMC
@@ -17,20 +17,20 @@ def enregistrer_donnees_utilisateur(username, first_name, last_name, email, tele
     
     
 
-    # Récupérez l'utilisateur existant s'il y en a un
+    # Récupére l'utilisateur existant s'il y en a un
     existing_user = session.query(User).filter_by(username=username).first()
 
-    # Si l'utilisateur existe, récupérez son IMC précédent
+    # Si l'utilisateur existe, récupére son IMC précédent
     previous_bmi = None
     if existing_user:
         previous_bmi = existing_user.bmi.imc_resultat
 
-    # Créez les objets User, Bmi et History
+    # Crée les objets User, Bmi et History
     bmi = Bmi(poids=poids, taille=taille, imc_resultat=imc)
     user.bmi = bmi
     history = History(user_id=user.user_id, previous_bmi=previous_bmi, current_bmi=bmi.imc_resultat)
 
-    # Ajoutez les objets à la session et commit
+    # Ajoute les objets à la session et commit
     session.add(user)
     session.add(bmi)
     session.add(history)
