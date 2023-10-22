@@ -1,4 +1,4 @@
-from schema import User, engine, Bmi
+from schema import User, engine, Bmi, History
 from sqlalchemy.orm import sessionmaker
 
 
@@ -63,16 +63,30 @@ def affichage(imc):
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Pour faire le lien
+# Récupère l'IMC précedent de l'utilisateur s'il existe
+previous_bmi = None
+
+existing_user = session.query(User).filter_by(username=username)
+if existing_user:
+     previous_bmi = existing_user.bmi.imc_resultat
+
+     
+# Crée les objets user, bmi et history
 user = User(username=username, first_name=first_name, last_name=last_name, adresse=adresse, telephone=telephone, email=email)
 
 bmi = Bmi(poids=poids, taille=taille, imc_resultat=imc_resultat)
 user.bmi = bmi
 
+history = History(user_id=user.user_id, previous_bmi=previous_bmi, current_bmi=imc_resultat)
+
+
+
+
 
 # Ajoute les objets à la session et commit
 session.add(user)
 session.add(bmi)
+session.add(history)
 session.commit()
 
 
